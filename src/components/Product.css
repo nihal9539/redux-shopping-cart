@@ -11,6 +11,7 @@ button {
   margin-top: 25px;
   margin-bottom: auto;
   padding: 10px;
+  border-radius: 15px;
   color: white;
   border: none;
   cursor: pointer;
@@ -21,10 +22,13 @@ button {
   height: 250px;
   display: flex;
   padding: 10px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 10px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 5px 5px 10px #ccc;
+  box-shadow: 5px 5px 10px #5d5b5b;
 }
 .card img {
   width: 90%;
