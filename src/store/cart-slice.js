@@ -1,37 +1,48 @@
-import {createSlice} from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
 
 
 const cartSlice = createSlice({
-    name:"cart",
-    initialState:{
-        itemsList:[],
-        totalQuantity:0,
-        showCart:false
+    name: "cart",
+    initialState: {
+        itemsList: [],
+        totalQuantity: 0,
+        showCart: false
     },
-    reducers:{
-        addToCart(state,action){
-            const newItem=action.payload;
+    reducers: {
+        addToCart(state, action) {
+            const newItem = action.payload;
             //to check if the item alreadt there
-            const existingItem = state.itemsList.find((item)=> item.id === newItem.id)
+            const existingItem = state.itemsList.find((item) => item.id === newItem.id)
             if (existingItem) {
                 existingItem.quantity++;
                 existingItem.totalPrice += newItem.price
                 state.totalQuantity++
-            }else{
+            } else {
                 state.itemsList.push({
-                    id:newItem.id,
-                    price:newItem.price,
-                    quantity:1,
-                    totalPrice:newItem.price,
-                    name:newItem.name
+                    id: newItem.id,
+                    price: newItem.price,
+                    quantity: 1,
+                    totalPrice: newItem.price,
+                    name: newItem.name
                 })
                 state.totalQuantity++;
             }
         },
-        removeFromCart(){},
-        showCart(state){
-            state.showCart=!state.showCart
+        removeFromCart(state, action) {
+            const id = action.payload;
+            const existingItems = state.itemsList.find((item) => item.id === id)
+            if (existingItems.quantity === 1) {
+                state.itemsList = state.itemsList.filter(item => item.id !== id)
+                state.totalQuantity--
+            }else{
+            existingItems.quantity--;
+            state.totalQuantity--;
+            existingItems.totalPrice -= existingItems.price;
+            }
+        },
+        setShowCart(state) {
+            state.showCart = !state.showCart
         }
     }
 
