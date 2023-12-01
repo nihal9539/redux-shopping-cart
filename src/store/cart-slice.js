@@ -8,10 +8,16 @@ const cartSlice = createSlice({
     initialState: {
         itemsList: [],
         totalQuantity: 0,
-        showCart: false
+        showCart: false,
+        changed : false
     },
     reducers: {
+        replaceData(state,action){
+            state.totalQuantity = action.payload
+            state.itemsList = action.payload.itemsList
+        },
         addToCart(state, action) {
+            state.changed = true
             const newItem = action.payload;
             //to check if the item alreadt there
             const existingItem = state.itemsList.find((item) => item.id === newItem.id)
@@ -31,6 +37,7 @@ const cartSlice = createSlice({
             }
         },
         removeFromCart(state, action) {
+            state.changed = true
             const id = action.payload;
             const existingItems = state.itemsList.find((item) => item.id === id)
             if (existingItems.quantity === 1) {
@@ -48,52 +55,7 @@ const cartSlice = createSlice({
     },
 })
 
-export const sendCatData = (cart) => {
-    return  async (dispatch) => {
-        
-        dispatch(uiAction.showNotification(
-            {
-                open: true,
-                message: "Sending reuest",
-                type: 'warning'
-            }
-        ));
-            const sendRequest =async  () => {
-                //send state as sending request
-                
-                const res = await fetch('https://redux-shoping-test-default-rtdb.firebaseio.com/cartItems.json',
-                    {
-                        method: "PUT",
-                        body: JSON.stringify(cart)
-                    }
-                );
-                const data = await res.json();
-                // console.log(data);
-                //send state as reuest is sucessfull
-                dispatch(uiAction.showNotification(
-                    {
-                        open: true,
-                        message: "Sent request to database",
-                        type: 'success'
-                    },
-                    
-                ))
-            }
-            try{
-                await sendRequest();
-            }catch (err){
-                dispatch
-            (uiAction.showNotification(
-                {
-                    open: true,
-                    message: "Sending reuest failed",
-                    type: 'error'
-                }
-            ));
-            }
-            
-    }
-}
+
 export const cartAction = cartSlice.actions;
 
 

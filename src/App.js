@@ -4,8 +4,9 @@ import Auth from "./components/Auth";
 import Layout from "./components/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import Notification from "./components/Notification";
-import { uiAction } from "./store/ui-slice";
-import { sendCatData } from "./store/cart-slice";
+// import { uiAction } from "./store/ui-slice";
+import { cartAction } from "./store/cart-slice";
+import { fetchData ,sendCatData} from "./store/cart-actions";
 
 function App() {
   let isFirstRender = true;
@@ -14,18 +15,18 @@ function App() {
   const notifications = useSelector(state => state.ui);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   console.log(isLoggedIn);
+
+  useEffect(()=>{
+    dispatch(fetchData())
+  },[dispatch])
   useEffect(() => {
     if (isFirstRender) {
       isFirstRender = false
       return;
     }
-    
-    dispatch(sendCatData(cart))
-    // sendRequest().catch(err=>{
-    //   // send state as error
-    
-    // })
-
+    if (cart.change) {
+      dispatch(sendCatData(cart))
+    }
   }, [cart])
   return (
     <div className="App">
