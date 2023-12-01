@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { uiAction } from "./ui-slice";
 
 
 
@@ -35,20 +36,64 @@ const cartSlice = createSlice({
             if (existingItems.quantity === 1) {
                 state.itemsList = state.itemsList.filter(item => item.id !== id)
                 state.totalQuantity--
-            }else{
-            existingItems.quantity--;
-            state.totalQuantity--;
-            existingItems.totalPrice -= existingItems.price;
+            } else {
+                existingItems.quantity--;
+                state.totalQuantity--;
+                existingItems.totalPrice -= existingItems.price;
             }
         },
         setShowCart(state) {
             state.showCart = !state.showCart
         }
-    }
-
+    },
 })
 
-
+export const sendCatData = (cart) => {
+    return  async (dispatch) => {
+        
+        dispatch(uiAction.showNotification(
+            {
+                open: true,
+                message: "Sending reuest",
+                type: 'warning'
+            }
+        ));
+            const sendRequest =async  () => {
+                //send state as sending request
+                
+                const res = await fetch('https://redux-shoping-test-default-rtdb.firebaseio.com/cartItems.json',
+                    {
+                        method: "PUT",
+                        body: JSON.stringify(cart)
+                    }
+                );
+                const data = await res.json();
+                // console.log(data);
+                //send state as reuest is sucessfull
+                dispatch(uiAction.showNotification(
+                    {
+                        open: true,
+                        message: "Sent request to database",
+                        type: 'success'
+                    },
+                    
+                ))
+            }
+            try{
+                await sendRequest();
+            }catch (err){
+                dispatch
+            (uiAction.showNotification(
+                {
+                    open: true,
+                    message: "Sending reuest failed",
+                    type: 'error'
+                }
+            ));
+            }
+            
+    }
+}
 export const cartAction = cartSlice.actions;
 
 
