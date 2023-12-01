@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import Auth from "./components/Auth";
-import Layout from "./components/Layout";
+import Layout from "./components/Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
-import Notification from "./components/Notification";
-// import { uiAction } from "./store/ui-slice";
-import { cartAction } from "./store/cart-slice";
+import Notification from "./components/Notification/Notification";
 import { fetchData ,sendCatData} from "./store/cart-actions";
+import Auth from "./components/Auth/Auth";
 
 function App() {
   let isFirstRender = true;

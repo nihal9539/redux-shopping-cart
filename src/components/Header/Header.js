@@ -1,8 +1,8 @@
 import React from "react";
-import Cart from "./Cart";
+import Cart from "../Cart/Cart";
 import "./Header.css";
 import { useDispatch } from "react-redux";
-import { authAction } from "../store/auth-slice";
+import { authAction } from "../../store/auth-slice";
 const Header = () => {
   const dispatch = useDispatch()
   const logouthandler = () => {

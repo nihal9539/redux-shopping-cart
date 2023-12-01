@@ -51,6 +51,14 @@ const cartSlice = createSlice({
         },
         setShowCart(state) {
             state.showCart = !state.showCart
+        },
+        setCloseCart(state) {
+            state.showCart = false
+        },
+        setPlaceOrder(state) {
+            state.itemsList = []
+            state.totalQuantity=0
+            state.showCart = false
         }
     },
 })

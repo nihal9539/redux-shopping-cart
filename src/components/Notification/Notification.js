@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert } from "@mui/material"
 import { useDispatch, useSelector } from 'react-redux'
-import { uiAction } from '../store/ui-slice'
+import { uiAction } from '../../store/ui-slice'
 
 const Notification = ({ type, message }) => {
     const dispatch = useDispatch()

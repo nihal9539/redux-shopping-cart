@@ -1,0 +1,9 @@
+.cart-container {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 20px;
+    height: 400px;
+    padding: 10px;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
